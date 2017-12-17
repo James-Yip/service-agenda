@@ -28,7 +28,7 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	// ### user login
 	mx.HandleFunc("/v1/user/login", userLoginHandler(formatter)).Methods("GET")
 	// ### user logout
-	mx.HandleFunc("/v1/user/logout", userLogoutHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/v1/user/logout", userLogoutHandler(formatter)).Methods("GET")
 
 	// # Users
 	// ### List all Users

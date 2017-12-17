@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/haswelliris/service-agenda/service/model"
+	"github.com/James-Yip/service-agenda/service/model"
 )
 
 // format: yyyy-mm-dd/hh:mm

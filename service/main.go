@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/haswelliris/service-agenda/service/service"
+	"github.com/James-Yip/service-agenda/service/service"
 )
 
 const (

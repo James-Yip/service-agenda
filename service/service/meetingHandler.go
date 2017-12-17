@@ -6,15 +6,15 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/haswelliris/service-agenda/service/model"
+	"github.com/James-Yip/service-agenda/service/model"
 
 	"github.com/unrolled/render"
 )
 
 func listAllMeetingsHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		name, err := model.GetCurUser()
-		if err != nil || name == "" {
+		name := model.GetCurUser()
+		if name == "" {
 			fmt.Println("用户未登录")
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("用户未登录"))
@@ -34,8 +34,8 @@ func listAllMeetingsHandler(formatter *render.Render) http.HandlerFunc {
 
 func createNewMeetingHandler(formatter *render.Render) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		name, err := model.GetCurUser()
-		if err != nil || name == "" {
+		name := model.GetCurUser()
+		if name == "" {
 			fmt.Println("用户未登录")
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("用户未登录"))
@@ -46,7 +46,7 @@ func createNewMeetingHandler(formatter *render.Render) http.HandlerFunc {
 		data, _ := ioutil.ReadAll(req.Body)
 		fmt.Println("收到提交数据" + string(data))
 		var meeting model.Meeting
-		err = json.Unmarshal([]byte(data), &meeting)
+		err := json.Unmarshal([]byte(data), &meeting)
 		if err != nil {
 			fmt.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
@@ -54,6 +54,10 @@ func createNewMeetingHandler(formatter *render.Render) http.HandlerFunc {
 			return
 		}
 		if meeting.StartTime == "" || meeting.EndTime == "" || meeting.Title == "" || len(meeting.Participators) <= 0 {
+			fmt.Println(meeting.StartTime)
+			fmt.Println(meeting.EndTime)
+			fmt.Println(meeting.Title)
+			fmt.Println(len(meeting.Participators))
 			fmt.Println("非法提交")
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("非法提交"))
@@ -62,7 +66,7 @@ func createNewMeetingHandler(formatter *render.Render) http.HandlerFunc {
 		fmt.Println("收到会议配置")
 		fmt.Println("title  sponsor  startTime  endTime  participators")
 		printMeeting(meeting)
-		meeting.Sponsor, err = model.GetCurUser()
+		meeting.Sponsor = model.GetCurUser()
 
 		meetings := model.GetMeetings()
 
@@ -111,6 +115,6 @@ func createNewMeetingHandler(formatter *render.Render) http.HandlerFunc {
 		model.AddMeeting(meeting.Title, meeting.Sponsor, meeting.Participators, meeting.StartTime, meeting.EndTime)
 		fmt.Println("创建会议成功")
 		_, createdMeeting, _ := model.GetMeeting(meeting.Title)
-		formatter.JSON(w, http.StatusOK, createdMeeting)
+		formatter.JSON(w, http.StatusCreated, createdMeeting)
 	}
 }
