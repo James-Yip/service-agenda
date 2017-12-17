@@ -46,15 +46,9 @@ User login.
 + Response 204
 
 
-### User Logout [POST /v1/user/logout]
+### User Logout [GET /v1/user/logout]
 
 Logout the current login user.Resource operations related to a user in the API.
-
-+ Response 204
-
-### User Delete [DELETE]
-
-Delete current login user.
 
 + Response 204
 
@@ -74,12 +68,12 @@ List all registered users' information except for passwords.
         [
             {
                 "username":"zhang3"
-                "password":"zhang"
                 "email":"zhang3@mail2.sysu.edu.cn"
+                "phone":"12345678912"
             },{
                 "username":"li4"
-                "password":"li"
                 "email":"li4@mail2.sysu.edu.cn"
+                "phone":"14785236912"
             }
         ]
 
