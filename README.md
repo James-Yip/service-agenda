@@ -4,7 +4,7 @@
 
 service-agenda is a simple client-server application based on the concept of microservices, where the client and the server are run in two different containers respectively.
 
-This application supports various operations for agenda management including user register, meeting creation & query, etc.
+This application supports various operations for agenda management including user register, meeting creation etc.
 
 ## API Design
 
@@ -37,7 +37,114 @@ Use "agenda [command] --help" for more information about a command.
 
 ```
 
-## Usage Examples
+1. pull the service-agenda image
+
+```
+$ sudo docker pull yezh7/service-agenda
+Using default tag: latest
+latest: Pulling from yezh7/service-agenda
+f49cf87b52c1: Pull complete
+7b491c575b06: Pull complete
+b313b08bab3b: Pull complete
+215a2061b8a4: Pull complete
+04fa9dcc5f7d: Pull complete
+044102b3b4a1: Pull complete
+37e616f9e3fe: Pull complete
+792a3ef002db: Pull complete
+3546448acc4c: Pull complete
+01387abcb16f: Pull complete
+Digest: sha256:ec65115dbdfcf18714c0b01fab4fbc95661c358c6c92dd0971fefa72eea884af
+Status: Downloaded newer image for yezh7/service-agenda:latest
+```
+
+2. run the server
+
+```
+$ sudo docker run --rm -p 8080:8080 yezh7/service-agenda service
+[negroni] listening on :8080
+```
+
+3. run the client
+
+```
+$ sudo docker run -it --rm --name agenda-cli --net host yezh7/service-agenda
+root@james-X555LPB:/#
+```
+
+
+## Test
+
+### Service Test
+
+register
+```
+/# cli register -u james -p 123456 -e james@qq.com -t 13623887454
+Register success as:
+"james"
+```
+
+login
+```
+/# cli login -u james -p 123456
+Login: success.
+```
+
+logout
+```
+/# cli logout
+Logout: success.
+```
+
+listUsers
+```
+/# cli listUsers
+[
+  {
+    "UserName": "james",
+    "Password": "123456",
+    "Email": "james@qq.com",
+    "Phone": "13623887454"
+  },
+  {
+    "UserName": "alice",
+    "Password": "123456",
+    "Email": "alice@qq.com",
+    "Phone": "13623887455"
+  }
+]
+
+```
+
+createMeeting
+```
+/# cli createMeeting -t singleDog -p "alice" -s 2017-11-11/11:11 -e 2017-11-11/11:22
+Creat meeting success as:
+{
+  "Title": "singleDog",
+  "Sponsor": "james",
+  "StartTime": "2017-11-11/11:11",
+  "EndTime": "2017-11-11/11:22",
+  "Participators": [
+    "alice"
+  ]
+}
+```
+
+listMeeting
+```
+/# cli listMeetings -s 2017-11-11/11:11 -e 2017-11-11/11:22
+[
+  {
+    "Title": "singleDog",
+    "Sponsor": "james",
+    "StartTime": "2017-11-11/11:11",
+    "EndTime": "2017-11-11/11:22",
+    "Participators": [
+      "alice"
+    ]
+  }
+]
+```
 
 
 ## Mock Test

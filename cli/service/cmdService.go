@@ -68,9 +68,7 @@ func Logout() error {
 }
 
 func ListUsers() error {
-	fmt.Println("send get users")
 	res, err := http.Get(host + "/v1/users")
-	fmt.Println("after send get users")
 	if err != nil {
 		return err
 	}
