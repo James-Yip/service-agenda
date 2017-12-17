@@ -6,10 +6,43 @@ service-agenda is a simple client-server application based on the concept of mic
 
 This application supports various operations for agenda management including user register, meeting creation & query, etc.
 
+## API Design
+
+See [https://agenda29.docs.apiary.io](https://agenda29.docs.apiary.io)
+
+## Usage
+
+```
+Agenda is a CLI meeting manager program based on cobra.
+
+This application is a tool to support various operations on meetings
+including user register, meeting creation & query, etc.
+
+Usage:
+  agenda [command]
+
+Available Commands:
+  createMeeting Create a meeting
+  help          Help about any command
+  listMeetings  List all meetings
+  listUsers     List all registered users
+  login         User login
+  logout        User logout
+  register      Register user
+
+Flags:
+  -h, --help   help for agenda
+
+Use "agenda [command] --help" for more information about a command.
+
+```
+
+## Usage Examples
+
 
 ## Mock Test
 
-Test client using mock server
+Test client using mock server.
 
 ```
 $ go test -v ./cli/service/
@@ -70,5 +103,4 @@ Creat meeting success as:
 ]--- PASS: TestListMeetings (0.32s)
 PASS
 ok  	github.com/James-Yip/service-agenda/cli/service	4.122s
-
 ```
